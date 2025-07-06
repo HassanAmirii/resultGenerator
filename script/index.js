@@ -30,10 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
             resultTemplate.innerHTML = `<p>your results : </p>
         
         
-        <p>${getDesiredResultObj.name}</p>
-        <p>${getDesiredResultObj.class}</p>
-        <p>${getDesiredResultObj.term}</p>
-           <p><a href="${getDesiredResultObj.pdf}">download result file</a>
+        <p>Name: ${getDesiredResultObj.name}</p>
+        <p>Class: ${getDesiredResultObj.class}</p>
+        <p>Session: ${getDesiredResultObj.term}</p>
+           <p> Download: <a target="_blank" href="${getDesiredResultObj.pdf}"> result file</a>
 </p>
         <br><br><br><br><br> <button id="recheckResult">Recheck result </button>
         

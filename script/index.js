@@ -5,9 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
 3. display in app.innerHTML 
 */
 
-  //   const inputBar = document.getElementsById("inputBar");
-  //   const resultTemplate = document.getElementById("resultTemplate");
-  const getResult = inputBar.innerHTML;
   fetch("/data/result.json")
     .then((res) => {
       if (!res.ok) {
@@ -17,16 +14,44 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     .then((data) => {
-      const getDataObj = data.results;
-      console.log(getDataObj);
-      const getDesiredResult = getDataObj.find(function (resultItem) {
-        return resultItem.getResult;
+      document.getElementById("resultForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        var formData = document.getElementById("inputBar").value;
+        if (formData) {
+          const getDataObj = data.results;
+          console.log(getDataObj);
+          const allResultObject = getDataObj[0];
+          console.log(allResultObject);
+
+          const getDesiredResultObj = allResultObject[formData];
+          console.log(getDesiredResultObj);
+
+          if (getDesiredResultObj) {
+            resultTemplate.innerHTML = `<p>your results : </p>
+        
+        
+        <p>${getDesiredResultObj.name}</p>
+        <p>${getDesiredResultObj.class}</p>
+        <p>${getDesiredResultObj.term}</p>
+           <p><a href="${getDesiredResultObj.pdf}">download result file</a>
+</p>
+        <br><br><br><br><br> <button id="recheckResult">Recheck result </button>
+        
+        `;
+            document
+              .getElementById("recheckResult")
+              .addEventListener("click", function (e) {
+                window.location.reload();
+              });
+          } else {
+            // Handle case where formData key is not found in data.results
+            resultTemplate.innerHTML = `<p>No results found for ID: ${formData}</p>`;
+            console.log(`No data found for key: ${formData}`);
+          }
+        } else {
+          console.log("cant find formdata");
+        }
       });
-      console.log(getDesiredResult);
-
-      //   const getResultObj = getDataObj[getResult];
-
-      //   resultTemplate.innerHTML = `<p>your results : ${getDataObj[getResult]}</p>`;
     })
 
     .catch((error) => {

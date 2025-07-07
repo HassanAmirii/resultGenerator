@@ -1,1 +1,28 @@
 data/
+# Node modules
+node_modules/
+.DS_Store # macOS specific
+npm-debug.log* # npm debug logs
+yarn-debug.log* # yarn debug logs
+yarn-error.log* # yarn error logs
+.env # Environment variables - usually sensitive
+.env.*.local # Local environment variables
+
+# Compiled TypeScript output
+dist/ # If you output to a 'dist' folder
+*.js # Generally ignore all .js files in the same directory as .ts (unless you're mixing JS and TS sources)
+*.js.map # Source maps
+*.d.ts # TypeScript declaration files (usually generated)
+
+# Editor/IDE specific files
+.vscode/ # VS Code settings
+.idea/ # IntelliJ/WebStorm settings
+*.sublime-project
+*.sublime-workspace
+
+# Build output from various tools (add as needed)
+build/
+coverage/
+.parcel-cache/
+.next/ # Next.js specific
+.nuxt/ # Nuxt.js specific

@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
         else {
             console.log("resultform doesnt exist");
         }
-        const formData = document.getElementById("inputBar").value;
-        if (formData) {
+        const inputBar = document.getElementById("inputBar").value;
+        if (inputBar) {
             const getDataObj = data.results;
             console.log(getDataObj);
             const allResultObject = getDataObj[0];
             console.log(allResultObject);
-            var getDesiredResultObj = allResultObject[formData];
+            var getDesiredResultObj = allResultObject[inputBar];
             console.log(getDesiredResultObj);
         }
         else {
@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         else {
             // Handle case where formData key is not found in data.results
-            resultTemplate.innerHTML = `<p>No results found for ID: ${formData}</p>`;
-            console.log(`No data found for key: ${formData}`);
+            resultTemplate.innerHTML = `<p>No results found for ID: ${inputBar}</p>`;
+            console.log(`No data found for key: ${inputBar}`);
         }
         const recheckResult = document.getElementById("recheckResult");
         if (recheckResult) {

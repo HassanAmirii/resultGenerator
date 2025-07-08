@@ -36,13 +36,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // lets tell ts about the blueprint of result.json in /data
   let data: fetchJsonData;
-  // fetch("/data/result.json")
-  // .then((res)=>{
-  //   if (!res.ok){
-  //     // throw error
-  // }
-  // return res.json
-  // })
-  // .then (data)
-  // .catch console.error();
+  try {
+    const res = await fetch("/data/result.json");
+    if (!res.ok) {
+      throw new Error(`http error: ${res.status}`);
+    }
+    data = await res.json();
+    console.log(data);
+  } catch (error) {
+    console.error("error", error);
+    if (resultTemplate) {
+      resultTemplate.innerHTML =
+        "<p>please try again later, error resolving data, it is not you, it is us!</p>";
+    }
+  }
 });

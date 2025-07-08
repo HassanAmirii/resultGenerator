@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */
   },
   "include": [
-    "./index.ts" /* Include your main TypeScript file */,
+    "./script/index.ts" /* Include your main TypeScript file */,
     "./script/**/*.ts" /* Include any other .ts files within a 'script' folder and its subfolders */
   ],
   "exclude": [

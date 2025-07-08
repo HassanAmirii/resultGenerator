@@ -17,3 +17,20 @@ interface allStudentsResultsMap {
 interface fetchJsonData {
   results: allStudentsResultsMap[];
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const resultTemplate = document.getElementById(
+    "resultTemplate"
+  ) as HTMLDivElement;
+  const resultForm = document.getElementById("resultForm") as HTMLFormElement;
+  const inputBar = document.getElementById("inputBar") as HTMLInputElement;
+
+  if (!resultForm || !resultTemplate || !inputBar) {
+    console.log("missing crucial element in dom");
+    if (resultTemplate) {
+      resultTemplate.innerHTML =
+        "<p>Sorry, the application could not load correctly. Please contact support.</p>";
+    }
+  }
+  return;
+});

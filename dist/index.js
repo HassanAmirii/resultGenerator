@@ -1,69 +1,54 @@
 "use strict";
-document.addEventListener("DOMContentLoaded", () => {
-    /* TODO:
-  1. user post id
-  2. fetch result from json
-  3. display in app.innerHTML
-  */
-    fetch("/data/result.json")
-        .then((res) => {
+// blueprint of the json data
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+document.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
+    const resultTemplate = document.getElementById("resultTemplate");
+    const resultForm = document.getElementById("resultForm");
+    const inputBar = document.getElementById("inputBar");
+    const errorReporter = document.getElementById("errorReporter");
+    if (!resultForm || !resultTemplate || !inputBar || !errorReporter) {
+        console.log("missing crucial element in dom");
+        if (resultTemplate) {
+            resultTemplate.innerHTML =
+                "<p>Sorry, the application could not load correctly. Please contact support.</p>";
+        }
+        return;
+    }
+    // lets tell ts about the blueprint of result.json in /data
+    let data;
+    try {
+        const res = yield fetch("/data/result.json");
         if (!res.ok) {
             throw new Error(`http error: ${res.status}`);
         }
-        return res.json();
-    })
-        .then((data) => {
-        const resultForm = document.getElementById("resultForm");
+        data = yield res.json();
+        const getDataObject = data.results[0];
+        console.log(getDataObject);
         resultForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const inputBar = document.getElementById("inputBar").value;
-            if (inputBar) {
-                const getDataObj = data.results;
-                console.log(getDataObj);
-                const allResultObject = getDataObj[0];
-                console.log(allResultObject);
-                var getDesiredResultObj = allResultObject[inputBar];
-                console.log(getDesiredResultObj);
-            }
-            else {
-                console.log("cant find formdata");
-            }
-            if (getDesiredResultObj) {
-                var resultTemplate = document.getElementById("resultTemplate");
-                if (resultTemplate) {
-                    resultTemplate.innerHTML = `<p>your results : </p>
-        
-        
-        <p>Name: ${getDesiredResultObj.name}</p>
-        <p>Class: ${getDesiredResultObj.class}</p>
-        <p>Session: ${getDesiredResultObj.term}</p>
-           <p> Download: <a target="_blank" href="${getDesiredResultObj.pdf}"> result file</a>
-               </p>
-        <br><br><br><br><br> <button id="recheckResult">Recheck result </button>
-        
-        `;
-                }
-                else {
-                    console.log("result template does not exist");
-                }
-            }
-            else {
-                // Handle case where formData key is not found in data.results
-                resultTemplate.innerHTML = `<p>No results found for ID: ${inputBar}</p>`;
-                console.log(`No data found for key: ${inputBar}`);
-            }
-            const recheckResult = document.getElementById("recheckResult");
-            if (recheckResult) {
-                recheckResult.addEventListener("click", function (e) {
-                    window.location.reload();
-                });
-            }
-            else {
-                console.log(" var:recheck result does not exist");
+            errorReporter.innerHTML = "";
+            const formDataValue = inputBar.value.trim();
+            if (!formDataValue) {
+                errorReporter.innerHTML =
+                    "<p>please input an identification code!! </p>";
+                return;
             }
         });
-    })
-        .catch((error) => {
-        console.error("error:", error);
-    });
-});
+    }
+    catch (error) {
+        console.error("error", error);
+        if (resultTemplate) {
+            resultTemplate.innerHTML =
+                "<p>please try again later, error resolving data, it is not you, it is us!</p>";
+        }
+        return;
+    }
+}));

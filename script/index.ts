@@ -33,4 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
   return;
+
+  // lets tell ts about the blueprint of result.json in /data
+  let data: fetchJsonData;
 });

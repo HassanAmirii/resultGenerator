@@ -36,4 +36,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // lets tell ts about the blueprint of result.json in /data
   let data: fetchJsonData;
+  // fetch("/data/result.json")
+  // .then((res)=>{
+  //   if (!res.ok){
+  //     // throw error
+  // }
+  // return res.json
+  // })
+  // .then (data)
+  // .catch console.error();
 });

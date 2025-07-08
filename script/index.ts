@@ -24,15 +24,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   ) as HTMLDivElement;
   const resultForm = document.getElementById("resultForm") as HTMLFormElement;
   const inputBar = document.getElementById("inputBar") as HTMLInputElement;
+  const errorReporter = document.getElementById(
+    "errorReporter"
+  ) as HTMLParagraphElement;
 
-  if (!resultForm || !resultTemplate || !inputBar) {
+  if (!resultForm || !resultTemplate || !inputBar || !errorReporter) {
     console.log("missing crucial element in dom");
     if (resultTemplate) {
       resultTemplate.innerHTML =
         "<p>Sorry, the application could not load correctly. Please contact support.</p>";
     }
+    return;
   }
-  return;
 
   // lets tell ts about the blueprint of result.json in /data
   let data: fetchJsonData;
@@ -42,12 +45,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error(`http error: ${res.status}`);
     }
     data = await res.json();
-    console.log(data);
+    const getDataObject = data.results[0];
+    console.log(getDataObject);
+    resultForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      errorReporter.innerHTML = "";
+      const formDataValue = inputBar.value.trim();
+      if (!formDataValue) {
+        errorReporter.innerHTML =
+          "<p>please input an identification code!! </p>";
+        return;
+      }
+    });
   } catch (error) {
     console.error("error", error);
     if (resultTemplate) {
       resultTemplate.innerHTML =
         "<p>please try again later, error resolving data, it is not you, it is us!</p>";
     }
+    return;
   }
 });

@@ -1,0 +1,119 @@
+// --- TODO: Project Setup & Initial Structure ---
+
+// TODO 1: Create main project files
+//  - Create `index.html` (your main webpage)
+//  - Create `data/` folder (for dummy JSON)
+//  - Create `data/result.json` (put your dummy data here)
+//  - Create `app.ts` (your main TypeScript code file)
+//  - Create `tsconfig.json` (for TypeScript compiler settings)
+//  - Create `.gitignore` file in your project root
+
+// TODO 2: Configure .gitignore
+//  - Add `/data/` to `.gitignore` (to exclude dummy JSON from Git)
+//  - Add `/node_modules/` to `.gitignore` (standard for npm projects)
+//  - Add `/app.js` and `/app.js.map` to `.gitignore` (or whatever your compiled JS files are named)
+
+// TODO 3: Configure tsconfig.json (basic setup)
+//  - Ensure `target` is 'es2020' or higher (for async/await, optional chaining)
+//  - Ensure `module` is 'es2020' or 'commonjs' (depends on your build setup, commonjs is fine for simple scripts)
+//  - Ensure `strict` is `true` (this enables `strictNullChecks` which is the "pain" but also the "gain"!)
+//  - Set `outDir` to specify where compiled JS goes (e.g., `"./dist"`)
+//  - Set `rootDir` to your source (e.g., `"./src"` or `"."` if app.ts is at root)
+//  - Set `esModuleInterop` to `true`
+
+// TODO 4: Link compiled JS in index.html
+//  - In `index.html`, ensure you link to the *compiled* `app.js` file, e.g., `<script src="app.js"></script>`
+//  - Place the `<script>` tag just before the closing `</body>` tag for best practice.
+
+// --- TODO: TypeScript Data Modeling ---
+
+// TODO 5: Define JSON data interfaces
+//  - Create `interface StudentResult` for individual student data (name, class, term, pdf)
+//  - Create `interface AllStudentResultsMap` using index signature `[key: string]: StudentResult;`
+//  - Create `interface FetchedJsonData` for the top-level structure (the 'results' array)
+//  - Place these interfaces at the top of your `app.ts` or in a separate `types.ts` file if you prefer (and import them).
+
+// --- TODO: Initial DOM & App Setup ---
+
+// TODO 6: Implement `DOMContentLoaded` listener
+//  - Wrap all your main application logic inside `document.addEventListener("DOMContentLoaded", async () => { ... });`
+//  - Remember to add `async` to the callback function!
+
+// TODO 7: Get critical DOM elements with type assertions
+//  - Get `resultForm` (as `HTMLFormElement`)
+//  - Get `inputBarElement` (as `HTMLInputElement`)
+//  - Get `resultTemplate` (as `HTMLDivElement` or `HTMLElement` if unsure)
+//  - Store them in `const` variables.
+
+// TODO 8: Implement initial DOM element guard clause
+//  - Add an `if (!element1 || !element2 || !element3)` check right after getting DOM elements.
+//  - Log an error to the console.
+//  - Provide a user-friendly message in `resultTemplate` (if `resultTemplate` itself was found).
+//  - `return;` early if any critical element is missing.
+
+// --- TODO: Data Fetching Logic ---
+
+// TODO 9: Implement `fetch` with `async/await` and `try...catch`
+//  - Declare a `let data: FetchedJsonData;` variable.
+//  - Use a `try...catch` block to wrap the fetch logic.
+//  - Inside `try`:
+//    - `const res = await fetch("/data/result.json");`
+//    - Check `if (!res.ok)` and `throw new Error(...)` if not.
+//    - `data = await res.json();` (TypeScript will verify against `FetchedJsonData`)
+//  - Inside `catch (error)`:
+//    - Log the error.
+//    - Update `resultTemplate` with an error message for the user.
+//    - `return;` early (cannot proceed without data).
+
+// --- TODO: Form Submission Logic ---
+
+// TODO 10: Set up `resultForm` submit event listener
+//  - `resultForm.addEventListener("submit", (e) => { ... });`
+//  - Call `e.preventDefault();` inside the listener.
+
+// TODO 11: Get user input and implement input validation guard clause
+//  - Get `const inputBar = inputBarElement.value.trim();`
+//  - Add `if (!inputBar)` guard clause:
+//    - Update `resultTemplate` with a "Please enter ID" message.
+//    - `return;` early.
+
+// TODO 12: Safely access data using optional chaining and explicit types
+//  - `const allResultObject = data.results?.[0];` (type will be `AllStudentResultsMap | undefined`)
+//  - `const getDesiredResultObj: StudentResult | undefined = allResultObject?.[inputBar];`
+
+// TODO 13: Implement "result not found" guard clause
+//  - Add `if (!getDesiredResultObj)` guard clause:
+//    - Update `resultTemplate` with a "No results found" message, including the `inputBar` value.
+//    - Log a console message.
+//    - `return;` early.
+
+// TODO 14: Render results if found
+//  - Use `resultTemplate.innerHTML = ``...``;`
+//  - Confidently use `getDesiredResultObj.name`, `.class`, `.term`, `.pdf` (TypeScript guarantees their existence now!)
+//  - Include the `<button id="recheckResult">Recheck result</button>` in the template.
+
+// TODO 15: Handle dynamically created "Recheck Result" button
+//  - After rendering `innerHTML`, get `const recheckResultButton = document.getElementById("recheckResult");`
+//  - Add an `if (recheckResultButton)` check.
+//  - Inside the `if` block, add the `addEventListener("click", () => window.location.reload());`
+//  - Add a `console.warn()` in the `else` block if the button wasn't found (for debugging).
+
+// --- TODO: Testing & Refinement ---
+
+// TODO 16: Compile and Test
+//  - Run `npx tsc` in your terminal.
+//  - Open `index.html` in your browser.
+//  - Test all scenarios:
+//    - Page loads (no critical element errors).
+//    - Dummy data fetches successfully.
+//    - Submit with empty input.
+//    - Submit with an ID that exists in dummy data.
+//    - Submit with an ID that *does not* exist in dummy data.
+//    - Click "Recheck Result".
+//    - (Optional: Temporarily make `data/result.json` invalid or unavailable to test fetch errors).
+
+// TODO 17: Review and Clean Up
+//  - Remove any old, commented-out JavaScript code.
+//  - Ensure consistent formatting (Prettier/ESLint can help here).
+//  - Review console logs – are they clear for debugging?
+//  - Consider adding more user-facing error messages instead of just console logs.

@@ -56,6 +56,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           "<p>please input an identification code!! </p>";
         return;
       }
+      const getDesiredResultObject = getDataObject[formDataValue];
+      if (!getDesiredResultObject) {
+        errorReporter.innerHTML =
+          "<p>No result found for this ID, please try again</p>";
+        return;
+      }
+
+      resultTemplate.innerHTML = `<p>Dear ${getDesiredResultObject.name}:</p> <p>class: ${getDesiredResultObject.class}</p> <p>result id: ${formDataValue}, </p> <p>term: ${getDesiredResultObject.term}, </p>  <p>Download your result file: <a target="_blank" href="${getDesiredResultObject.pdf}">Exam result download</a> </p> `;
     });
   } catch (error) {
     console.error("error", error);

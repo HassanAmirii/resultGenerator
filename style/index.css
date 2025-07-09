@@ -6,6 +6,9 @@ h1 {
   font-weight: 900;
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
+.error-message {
+  color: red;
+}
 
 #resultTemplate {
   margin: auto;

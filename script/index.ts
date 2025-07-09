@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      resultTemplate.innerHTML = `<p>Dear ${getDesiredResultObject.name}:</p> <p>class: ${getDesiredResultObject.class}</p> <p>result id: ${formDataValue}, </p> <p>term: ${getDesiredResultObject.term}, </p>  <p>Download your result file: <a target="_blank" href="${getDesiredResultObject.pdf}">Exam result download</a> </p> `;
+      resultTemplate.innerHTML = `<p>Dear ${getDesiredResultObject.name}:</p> <p>class: ${getDesiredResultObject.class}</p> <p>result id: ${formDataValue}, </p> <p>term: ${getDesiredResultObject.term}, </p>  <p>Download your result file: <a target="_blank" href="${getDesiredResultObject.pdf}">Exam result download</a> </p> <br><br><br><br><br> <button id="retryInputCode"> Try a new code </button>`;
     });
   } catch (error) {
     console.error("error", error);
